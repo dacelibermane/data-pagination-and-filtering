@@ -20,8 +20,9 @@ This function will create and insert/append the elements needed to display a "pa
 */
 //-----------------------------Display a page of 9 students-----------------
 
-const studentList = document.querySelector('.student-list');
-const linkList = document.querySelector('.link-list')
+const listUl = document.querySelector('.student-list');
+const paginationUl = document.querySelector('.link-list');
+const currPage = 1;
 const itemsPerPage = 9;
 
 //izsaucot funkciju list vietā ir data(jo tur glabājās viss info par studentiem)
@@ -29,7 +30,7 @@ const itemsPerPage = 9;
 function showPage(list, currPage){
    const startIndex = (currPage * itemsPerPage) - itemsPerPage;
    const endIndex =currPage * itemsPerPage;
-   studentList.innerHTML = '';
+   listUl.innerHTML = '';
 
    for(let i = 0; i < list.length; i++){
       if(i >= startIndex && i < endIndex){
@@ -45,17 +46,29 @@ function showPage(list, currPage){
           </div>
         </li>
          `
-         studentList.insertAdjacentHTML('beforeend', studentInfo);
+         listUl.insertAdjacentHTML('beforeend', studentInfo);
       }
    }
 }
 
-//-------------------------Pagination Buttons
-// function addPaginationButton(list) {
-//    const paginationBtns = list.length
-// }
+//-------------------------Pagination Buttons---------------------
+function setupPagination(list) {
+   paginationUl.innerHTML = '';
+   const pageCount = Math.ceil(list.length / itemsPerPage) ;
+
+   for(let i = 1; i < pageCount + 1; i++){
+      const paginationBtn = `
+      <li>
+      <button type="button">${i}</button>
+      </li>
+   `
+   paginationUl.insertAdjacentHTML('beforeend', paginationBtn);
+   }
+   
+}
 
 showPage(data, 1);
+setupPagination(data)
 
 
 
